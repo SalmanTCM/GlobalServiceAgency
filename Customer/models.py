@@ -1,10 +1,11 @@
-# customers/models.py
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Customer(models.Model):
-    pax_first_name = models.CharField(max_length=100, null=True)
-    pax_last_name = models.CharField(max_length=100, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)  # Set default to None
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
     passport_no = models.CharField(max_length=100, null=True)
     pnr_no = models.CharField(max_length=100, null=True)
     email = models.EmailField(unique=True)
@@ -12,5 +13,12 @@ class Customer(models.Model):
     travel_date = models.DateField()
     address = models.TextField(blank=True, null=True)
 
+    BOOKING_TYPES = (
+        ('Flight', 'Flight'),
+        ('Hotel', 'Hotel'),
+        ('Tour', 'Tour'),
+    )
+    booking_type = models.CharField(max_length=10, choices=BOOKING_TYPES, default='Flight')
+
     def __str__(self):
-        return f"{self.pax_first_name} {self.pax_last_name}"
+        return f"{self.first_name} {self.last_name}"

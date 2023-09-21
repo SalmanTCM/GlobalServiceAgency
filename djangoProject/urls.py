@@ -7,5 +7,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/', include('Customer.urls')),
+    path('allusers/', include('allusers.urls')),
     # path("", include("django_nextjs.urls")),
 ]

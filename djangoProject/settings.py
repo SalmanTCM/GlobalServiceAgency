@@ -18,6 +18,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     'salesLog',
     'rangefilter',
     'ticket_management',
+    'allusers',
 
 
 ]
