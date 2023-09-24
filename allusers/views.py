@@ -1,9 +1,9 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 
 
 def register(request):
@@ -32,3 +32,21 @@ def profile_view(request):
 @csrf_protect
 def login_view(request):
     return render(request, 'login.html')
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('profile')  # Replace 'profile' with your actual profile URL name
+            else:
+                form.add_error(None, 'Invalid username or password.')
+
+    else:
+        form = LoginForm()  # Create an empty form for GET requests
+
+    return render(request, 'login.html', {'form': form})
