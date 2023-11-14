@@ -30,10 +30,11 @@ class salesLog(models.Model):
     pnr_no = models.CharField(max_length=100, null=True)
     route = models.CharField(max_length=100, null=True)
     travel_date = models.DateField()
-    grand_fare = models.CharField(max_length=10, null=True)
-    net_fare = models.CharField(max_length=10, null=True)
+    base_fare = models.CharField(max_length=10, null=True)
+    tax = models.CharField(max_length=10, null=True)
+    discount = models.CharField(max_length=10, null=True)
 
-    # You can't directly calculate 'profit' as a field like this, use methods or properties for this purpose
+
     payment_method = models.CharField(
         max_length=10,
         choices=[('bank', 'Bank'), ('mfs', 'Mobile Financial Service'), ('cash', 'Cash')],
@@ -44,9 +45,9 @@ class salesLog(models.Model):
 
     # Add more fields as needed
 
-    def calculate_profit(self):
-        if self.grand_fare and self.net_fare:
-            return int(self.grand_fare) - int(self.net_fare)
+    def customer_price(self):
+        if self.base_fare and self.tax:
+            return int(self.base_fare) + int(self.tax)
         return None
 
     def __str__(self):
