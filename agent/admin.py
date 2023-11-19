@@ -10,7 +10,7 @@ class AgentListAdmin(admin.ModelAdmin):
 admin.site.register(AgentList,AgentListAdmin)
 
 class AgentLogAdmin(admin.ModelAdmin):
-    list_display = ("agent_name", "ticket_no", "travel_date", "grand_fare", "paid", "due")
+    list_display = ("agent_name", "ticket_no", "travel_date", "base_fare", "paid", "due")
     search_fields = ("agent_name", "ticket_no")
     list_filter = ("travel_date", 'due')
 

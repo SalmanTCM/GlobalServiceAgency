@@ -22,7 +22,7 @@ admin.site.register(Customer, CustomerAdmin)
 class SalesLogAdmin(admin.ModelAdmin):
     list_display = (
      'customer', 'agent_name', 'ticket_no', 'pnr_no', 'route', 'travel_date', 'base_fare', 'tax', 'discount', 'customer_price',
-    'payment_method', 'remarks', 'date_of_issue')
+    'payment_method', 'remarks', 'date_of_issue', 'issue_types', 'penalty', 'refund_price', 'service_charge')
     # list_filter = (("travel_date", DateRangeFilter),)
     search_fields = ('agent_id', 'ticket_no', 'pnr_no', 'route', 'remarks')
 

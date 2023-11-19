@@ -25,7 +25,7 @@ class AgentLog(models.Model):
         agent_name = models.CharField(max_length=100, null=True)
         ticket_no = models.CharField(max_length=100, null=True)
         travel_date = models.DateField()
-        grand_fare = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+        base_fare = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
         paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
         due = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
@@ -36,7 +36,7 @@ class AgentLog(models.Model):
             # Calculate the 'grand_fare' field by aggregating sales from SalesLog
             sales = salesLog.objects.filter(agent_name=self.agent_name, ticket_no=self.ticket_no,
                                             travel_date=self.travel_date)
-            total_fare = sum([Decimal(sale.grand_fare) for sale in sales])
-            self.grand_fare = total_fare
+            total_fare = sum([Decimal(sale.base_fare) for sale in sales])
+            self.base_fare = total_fare
 
             super().save(*args, **kwargs)
