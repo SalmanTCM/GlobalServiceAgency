@@ -23,7 +23,6 @@ ALLOWED_HOSTS = []
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -34,16 +33,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'django_nextjs',
-    'Customer',
     'rest_framework',
-    'salesLog',
     'rangefilter',
-    'ticket_management',
     'allusers',
-    'agent'
+    'Customer',
+    'agent',
+    'salesLog',
+    # 'ticket_management',
+
 
 
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,6 +73,13 @@ TEMPLATES = [
         },
     },
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_logo": "logo.png",
+    "login_logo": "loginlogo.png",
+
+}
+
 
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 

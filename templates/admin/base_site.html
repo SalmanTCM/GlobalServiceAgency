@@ -1,0 +1,11 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        #header h1 a {
+            background: url('/static/logo.png') no-repeat center;
+            width: 150px;
+        }
+    </style>
+{% endblock %}
