@@ -28,7 +28,7 @@ class SalesLogAdmin(admin.ModelAdmin):
     )
     list_editable = ('discount',)
     # list_filter = (("travel_date", DateRangeFilter),)
-    search_fields = ('agent_id', 'ticket_no', 'pnr_no', 'route', 'remarks')
+    search_fields = ('customer', 'ticket_no', 'pnr_no', 'route', 'remarks', 'agent_name')
     actions = ['notify_selected']
 
 
