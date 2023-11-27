@@ -17,7 +17,8 @@ SECRET_KEY = 'django-insecure-^=74tewy_n#q#+xr8_gnjd+$(oaxe5x54g4%v#b-_mxl=65)0z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 AUTHENTICATION_BACKENDS = [
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social_django',
     'drf_social_oauth2',
+    'import_export',
     # 'ticket_management',
 
 
@@ -156,7 +158,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-
+STATIC_ROOT = BASE_DIR / 'static_root/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 

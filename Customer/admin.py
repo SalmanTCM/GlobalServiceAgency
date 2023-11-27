@@ -3,6 +3,7 @@ from .models import Customer, salesLog
 from rangefilter.filters import DateRangeFilter
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
+from import_export.admin import ExportMixin
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('id', 'first_name', 'last_name', 'passport_no', 'email', 'phone_number', 'address', 'booking_type', 'file', 'display_image')
@@ -19,18 +20,17 @@ class CustomerAdmin(admin.ModelAdmin):
 admin.site.register(Customer, CustomerAdmin)
 
 
-class SalesLogAdmin(admin.ModelAdmin):
+class SalesLogAdmin(ExportMixin, admin.ModelAdmin):
     list_display = (
         'customer', 'agent_name', 'ticket_no', 'pnr_no', 'route', 'travel_date', 'base_fare', 'tax', 'discount',
         'customer_price',
-        'payment_method', 'remarks', 'date_of_issue', 'issue_types', 'penalty', 'refund_price', 'service_charge',
-         'paid', 'due', 'payment_status_colored'
+        'payment_method', 'remarks', 'date_of_issue',
+         'paid', 'due', 'payment_status_colored', 'created_on', 'issue_types_colored',
     )
     list_editable = ('discount',)
-    # list_filter = (("travel_date", DateRangeFilter),)
+    list_filter = (("travel_date", DateRangeFilter),)
     search_fields = ('customer', 'ticket_no', 'pnr_no', 'route', 'remarks', 'agent_name')
-    actions = ['notify_selected']
-
+    actions = ['export_admin_action']
 
 
     def payment_status_colored(self, obj):
@@ -46,14 +46,30 @@ class SalesLogAdmin(admin.ModelAdmin):
 
     payment_status_colored.short_description = 'Payment Status'
 
-class Media:
-    js = ('Customer/admin/js/sales_log_admin.js',)
+    def issue_types_colored(self, obj):
+        color = 'green' if obj.issue_types == 'no_issue' else 'red'
 
+        # Conditionally show or hide additional fields based on issue_types
+        additional_fields = ''
+        if obj.issue_types in ['refund', 'reissue']:
+            additional_fields = format_html(
+                '<br>penalty: {penalty}, refund: {refund}, service: {service}',
+                penalty=obj.penalty,
+                refund=obj.refund_price,
+                service=obj.service_charge
+            )
 
-def issue_types_colored(self, obj):
-    color = 'green' if obj.issue_types == 'no_issue' else 'red'
-    return format_html('<span style="color: {};">{}</span>', color, obj.issue_types)
+        return format_html(
+            '<span style="color: {};">{}</span>{}',
+            color, obj.issue_types, additional_fields
+        )
+
     issue_types_colored.short_description = 'Issue Types'
+
+    class Media:
+        js = ("admin/js/custom_admin.js",)
+
+
 
 
 admin.site.register(salesLog, SalesLogAdmin)

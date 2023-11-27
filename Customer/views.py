@@ -4,6 +4,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Customer
 from .serializers import CustomerSerializer
+from .models import salesLog
+from django.http import HttpResponse
+from django.views.generic import View
+# from .resources import salesLogResource
+from import_export.resources import ModelResource
+
+
 
 class CustomerList(APIView):
     def get(self, request):
@@ -42,3 +49,10 @@ class CustomerDetail(APIView):
         customer = self.get_object(pk)
         customer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# class ExportExcelView(View):
+#     def get(self, request, *args, **kwargs):
+#         dataset = salesLogResource().export(salesLog.objects.all())
+#         response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+#         response['Content-Disposition'] = 'attachment; filename=sales_logs.xls'
+#         return response

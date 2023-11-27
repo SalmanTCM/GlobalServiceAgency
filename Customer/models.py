@@ -100,7 +100,7 @@ class salesLog(models.Model):
         ('refund', 'refund'),
         ('reissue', 'reissue'),
     )
-    issue_types = models.CharField(max_length=10, choices=ISSUE_TYPES, default='no_issue')
+    issue_types = models.CharField(max_length=10, choices=ISSUE_TYPES,)
     penalty = models.CharField(max_length=10, blank=True, null=True)
     refund_price = models.CharField(max_length=10, blank=True, null=True)
     service_charge = models.CharField(max_length=10, blank=True, null=True)
@@ -113,16 +113,6 @@ class salesLog(models.Model):
     paid = models.CharField(max_length=10, null=True)
     due = models.CharField(max_length=10, null=True)
 
-    def save(self, *args, **kwargs):
-        if self.issue_types == 'refund':
-            self.penalty = ''
-        elif self.issue_types == 'reissue':
-            # Set penalty, refund_price, and service_charge to empty if issue type is reissue
-            self.penalty = ''
-            self.refund_price = ''
-            self.service_charge = ''
-
-        super(salesLog, self).save(*args, **kwargs)
 
     payment_method = models.CharField(
         max_length=10,
@@ -131,6 +121,7 @@ class salesLog(models.Model):
     )
     remarks = models.CharField(max_length=100, blank=True, null=True)
     date_of_issue = models.DateField()
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
 
     def customer_price(self):
         if self.base_fare and self.tax:
