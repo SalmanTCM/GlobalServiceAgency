@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(api_url_patterns)),
     # path("", include("django_nextjs.urls")),
+    path('', include('admin_datta.urls')),
 ]
 
 if settings.DEBUG:

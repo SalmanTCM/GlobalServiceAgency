@@ -25,7 +25,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 INSTALLED_APPS = [
-    'jazzmin',
+    'admin_datta.apps.AdminDattaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,11 +79,11 @@ TEMPLATES = [
     },
 ]
 
-JAZZMIN_SETTINGS = {
-    "site_logo": "logo.png",
-    "login_logo": "loginlogo.png",
-
-}
+# JAZZMIN_SETTINGS = {
+#     "site_logo": "logo.png",
+#     "login_logo": "loginlogo.png",
+#
+# }
 
 
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
