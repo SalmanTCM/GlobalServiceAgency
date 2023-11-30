@@ -4,11 +4,28 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Customer
 from .serializers import CustomerSerializer
+from django.shortcuts import render
 from .models import salesLog
-from django.http import HttpResponse
-from django.views.generic import View
-# from .resources import salesLogResource
-from import_export.resources import ModelResource
+from django.db.models import Sum
+from django.utils import timezone
+
+def daily_sales_view(request):
+    print("View is executed")
+    # Assuming you want to filter sales for today
+    today = timezone.now().date()
+    sales_data = salesLog.objects.filter(travel_date=today)
+
+    # Calculate daily customer price using the Sum function
+    total_customer_price = sum(sale.customer_price() or 0 for sale in sales_data)
+    print(f"Total Customer Price: {total_customer_price}")
+
+    context = {
+        'total_customer_price': total_customer_price,
+        'sales_data': sales_data,
+    }
+
+    return render(request, 'index.html', context)
+
 
 
 

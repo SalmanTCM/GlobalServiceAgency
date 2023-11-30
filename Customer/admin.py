@@ -28,7 +28,7 @@ class SalesLogAdmin(ExportMixin, admin.ModelAdmin):
          'paid', 'due', 'payment_status_colored', 'created_on', 'issue_types_colored',
     )
     list_editable = ('discount',)
-    list_filter = (("travel_date", DateRangeFilter),)
+    list_filter = (("travel_date", DateRangeFilter),'route', 'agent_name','date_of_issue')
     search_fields = ('customer', 'ticket_no', 'pnr_no', 'route', 'remarks', 'agent_name')
     actions = ['export_admin_action']
 

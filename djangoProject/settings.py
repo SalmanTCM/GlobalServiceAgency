@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
+from import_export.formats.base_formats import XLSX
 
+EXPORT_FORMATS = [XLSX]
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = BASE_DIR / "templates"
@@ -133,6 +135,8 @@ REST_FRAMEWORK = {
 
     ]
 }
+
+
 
 AUTHENTICATION_BACKENDS = (
    'drf_social_oauth2.backends.DjangoOAuth2',

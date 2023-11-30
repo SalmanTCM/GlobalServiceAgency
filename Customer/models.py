@@ -119,6 +119,8 @@ class salesLog(models.Model):
         choices=[('bank', 'Bank'), ('mfs', 'Mobile Financial Service'), ('cash', 'Cash')],
         default='bank'
     )
+
+
     remarks = models.CharField(max_length=100, blank=True, null=True)
     date_of_issue = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True, null=True)
@@ -127,6 +129,7 @@ class salesLog(models.Model):
         if self.base_fare and self.tax:
             return int(self.base_fare) + int(self.tax) - int(self.discount)
         return None
+
 
     def __str__(self):
         return str(self.agent_name)
