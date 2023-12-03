@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
+from import_export.formats.base_formats import XLSX
 
+EXPORT_FORMATS = [XLSX]
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = BASE_DIR / "templates"
@@ -17,14 +19,15 @@ SECRET_KEY = 'django-insecure-^=74tewy_n#q#+xr8_gnjd+$(oaxe5x54g4%v#b-_mxl=65)0z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 INSTALLED_APPS = [
-    'jazzmin',
+    'admin_datta.apps.AdminDattaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,10 +38,14 @@ INSTALLED_APPS = [
     'django_nextjs',
     'rest_framework',
     'rangefilter',
-    'allusers',
+    'users',
     'Customer',
     'agent',
     'salesLog',
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
+    'import_export',
     # 'ticket_management',
 
 
@@ -74,11 +81,11 @@ TEMPLATES = [
     },
 ]
 
-JAZZMIN_SETTINGS = {
-    "site_logo": "logo.png",
-    "login_logo": "loginlogo.png",
-
-}
+# JAZZMIN_SETTINGS = {
+#     "site_logo": "logo.png",
+#     "login_logo": "loginlogo.png",
+#
+# }
 
 
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
@@ -113,6 +120,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+     'DEFAULT_AUTHENTICATION_CLASSES': [
+         #Rest Framework Authentication Classes
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+
+         #Oauth2 Authentication
+         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+         'drf_social_oauth2.authentication.SocialAuthentication',
+
+    ]
+}
+
+
+
+AUTHENTICATION_BACKENDS = (
+   'drf_social_oauth2.backends.DjangoOAuth2',
+   'django.contrib.auth.backends.ModelBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -133,7 +162,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-
+STATIC_ROOT = BASE_DIR / 'static_root/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
