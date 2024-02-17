@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/home/tcm/Salman/Global Service/djangoProject/venv/bin/python" "$0" "$@"
+'''exec' "/home/salman/Salman/Salman/Global Service/GlobalServiceAgency/venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

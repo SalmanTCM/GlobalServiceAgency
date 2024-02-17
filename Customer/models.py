@@ -8,7 +8,7 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     passport_no = models.CharField(max_length=100, null=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, null=True )
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
 
@@ -17,7 +17,7 @@ class Customer(models.Model):
         ('Hotel', 'Hotel'),
         ('Tour', 'Tour'),
     )
-    booking_type = models.CharField(max_length=10, choices=BOOKING_TYPES, default='Flight')
+    booking_type = models.CharField(max_length=10, choices=BOOKING_TYPES, default='Flight', null=True)
     file = models.FileField(upload_to='uploads/', null=True)
 
     def __str__(self):
@@ -87,7 +87,7 @@ class salesLog(models.Model):
     id = models.AutoField(primary_key=True)
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    agent_name = models.CharField(max_length=100)
+    agent_name = models.CharField(max_length=100 , null=True)
     ticket_no = models.CharField(max_length=100, null=True)
     pnr_no = models.CharField(max_length=100, null=True)
     route = models.CharField(max_length=100, null=True)
@@ -108,7 +108,7 @@ class salesLog(models.Model):
         ('paid', 'Paid'),
         ('due', 'Due'),
     )
-    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default='due')
+    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default='due', null=True)
 
     paid = models.CharField(max_length=10, null=True)
     due = models.CharField(max_length=10, null=True)
