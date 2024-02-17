@@ -4,21 +4,20 @@ from django.contrib.auth.models import User
 
 
 class Customer(models.Model):
-    # user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    first_name = models.CharField(max_length=100, null=True)
-    last_name = models.CharField(max_length=100, null=True)
-    passport_no = models.CharField(max_length=100, null=True)
-    email = models.EmailField(unique=True, null=True )
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
+    first_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank=True )
+    passport_no = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(unique=True, null=True, blank=True)
+    phone_number = models.CharField(max_length=15, blank=False, null=False)
+    address = models.TextField(blank=True, null=True, )
 
     BOOKING_TYPES = (
         ('Flight', 'Flight'),
         ('Hotel', 'Hotel'),
         ('Tour', 'Tour'),
     )
-    booking_type = models.CharField(max_length=10, choices=BOOKING_TYPES, default='Flight', null=True)
-    file = models.FileField(upload_to='uploads/', null=True)
+    booking_type = models.CharField(max_length=10, choices=BOOKING_TYPES, default='Flight', null=True, blank=True)
+    file = models.FileField(upload_to='uploads/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -87,20 +86,20 @@ class salesLog(models.Model):
     id = models.AutoField(primary_key=True)
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    agent_name = models.CharField(max_length=100 , null=True)
-    ticket_no = models.CharField(max_length=100, null=True)
-    pnr_no = models.CharField(max_length=100, null=True)
-    route = models.CharField(max_length=100, null=True)
+    agent_name = models.CharField(max_length=100 , null=True, blank=True)
+    ticket_no = models.CharField(max_length=100, null=True, blank=True)
+    pnr_no = models.CharField(max_length=100, null=True, blank=True)
+    route = models.CharField(max_length=100, null=True, blank=True)
     travel_date = models.DateField()
-    base_fare = models.CharField(max_length=10, null=True)
-    tax = models.CharField(max_length=10, null=True)
-    discount = models.CharField(max_length=10, null=True)
+    base_fare = models.CharField(max_length=10, null=True, blank=True)
+    tax = models.CharField(max_length=10, null=True, blank=True)
+    discount = models.CharField(max_length=10, null=True, blank=True)
     ISSUE_TYPES = (
         ('no_issue', 'no issue'),
         ('refund', 'refund'),
         ('reissue', 'reissue'),
     )
-    issue_types = models.CharField(max_length=10, choices=ISSUE_TYPES,)
+    issue_types = models.CharField(max_length=10, choices=ISSUE_TYPES, blank=True)
     penalty = models.CharField(max_length=10, blank=True, null=True)
     refund_price = models.CharField(max_length=10, blank=True, null=True)
     service_charge = models.CharField(max_length=10, blank=True, null=True)
@@ -108,10 +107,10 @@ class salesLog(models.Model):
         ('paid', 'Paid'),
         ('due', 'Due'),
     )
-    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default='due', null=True)
+    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default='due', null=True, blank=True)
 
-    paid = models.CharField(max_length=10, null=True)
-    due = models.CharField(max_length=10, null=True)
+    paid = models.CharField(max_length=10, null=True, blank=True)
+    due = models.CharField(max_length=10, null=True, blank=True)
 
 
     payment_method = models.CharField(
@@ -123,7 +122,7 @@ class salesLog(models.Model):
 
     remarks = models.CharField(max_length=100, blank=True, null=True)
     date_of_issue = models.DateField()
-    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def customer_price(self):
         if self.base_fare and self.tax:
