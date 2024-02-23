@@ -93,7 +93,11 @@ class salesLog(models.Model):
     travel_date = models.DateField()
     base_fare = models.CharField(max_length=10, null=True, blank=True)
     tax = models.CharField(max_length=10, null=True, blank=True)
+    net_fare = models.CharField(max_length=10, null=True, blank=True)
+    commission = models.CharField(max_length=10, null=True, blank=True)
     discount = models.CharField(max_length=10, null=True, blank=True)
+    net_profit = models.CharField(max_length=10, null=True, blank=True)
+
     ISSUE_TYPES = (
         ('no_issue', 'no issue'),
         ('refund', 'refund'),
@@ -124,9 +128,21 @@ class salesLog(models.Model):
     date_of_issue = models.DateField()
     created_on = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
+    # def customer_price(self):
+    #     if self.base_fare and self.tax:
+    #         return int(self.base_fare) + int(self.tax) - int(self.discount)
+    #     return None
+
     def customer_price(self):
-        if self.base_fare and self.tax:
-            return int(self.base_fare) + int(self.tax) - int(self.discount)
+        if self.base_fare is not None and self.tax is not None and self.discount is not None:
+            try:
+                base_fare_int = int(self.base_fare)
+                tax_int = int(self.tax)
+                discount_int = int(self.discount)
+                return base_fare_int + tax_int - discount_int
+            except ValueError:
+                # Handle the case where the values are not valid integers
+                return None
         return None
 
 

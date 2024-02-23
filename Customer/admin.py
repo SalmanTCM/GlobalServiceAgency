@@ -9,6 +9,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = ('id', 'first_name', 'last_name', 'passport_no', 'email', 'phone_number', 'address', 'booking_type', 'file', 'display_image')
     list_filter = ('booking_type', 'passport_no')
     search_fields = ('pax_first_name', 'pax_last_name', 'passport_no', 'pnr_no', 'email')
+    list_per_page = 10
 
     def display_image(self, obj):
         if obj.file:
@@ -22,8 +23,8 @@ admin.site.register(Customer, CustomerAdmin)
 
 class SalesLogAdmin(ExportMixin, admin.ModelAdmin):
     list_display = (
-        'customer', 'agent_name', 'ticket_no', 'pnr_no', 'route', 'travel_date', 'base_fare', 'tax', 'discount',
-        'customer_price',
+        'customer', 'agent_name', 'ticket_no', 'pnr_no', 'route', 'travel_date', 'base_fare','tax','customer_price','net_fare', 'commission',
+         'discount','net_profit',
         'payment_method', 'remarks', 'date_of_issue',
          'paid', 'due', 'payment_status_colored', 'created_on', 'issue_types_colored',
     )
@@ -31,7 +32,7 @@ class SalesLogAdmin(ExportMixin, admin.ModelAdmin):
     list_filter = (("travel_date", DateRangeFilter),'route', 'agent_name','date_of_issue')
     search_fields = ('customer', 'ticket_no', 'pnr_no', 'route', 'remarks', 'agent_name')
     actions = ['export_admin_action']
-
+    list_per_page = 10
 
     def payment_status_colored(self, obj):
         # Display payment_status with colored text, background, padding, and border radius
