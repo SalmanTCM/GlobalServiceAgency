@@ -8,7 +8,7 @@ from import_export.admin import ExportMixin
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('id', 'first_name', 'last_name', 'passport_no', 'email', 'phone_number', 'address', 'booking_type', 'file', 'display_image')
     list_filter = ('booking_type', 'passport_no')
-    search_fields = ('pax_first_name', 'pax_last_name', 'passport_no', 'pnr_no', 'email')
+    search_fields = ('passport_no', 'email', 'phone_number')
     list_per_page = 10
 
     def display_image(self, obj):
