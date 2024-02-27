@@ -16,8 +16,6 @@ class CustomerAdmin(admin.ModelAdmin):
             return mark_safe(f'<img src="{obj.file.url}" width="50" height="50" />')
         return "No Image"
 
-
-
 admin.site.register(Customer, CustomerAdmin)
 
 

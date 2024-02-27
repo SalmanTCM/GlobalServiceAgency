@@ -134,12 +134,11 @@ class salesLog(models.Model):
     #     return None
 
     def customer_price(self):
-        if self.base_fare is not None and self.tax is not None and self.discount is not None:
+        if self.base_fare is not None and self.tax is not None:
             try:
                 base_fare_int = int(self.base_fare)
                 tax_int = int(self.tax)
-                discount_int = int(self.discount)
-                return base_fare_int + tax_int - discount_int
+                return base_fare_int + tax_int
             except ValueError:
                 # Handle the case where the values are not valid integers
                 return None
