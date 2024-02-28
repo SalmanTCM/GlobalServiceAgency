@@ -26,11 +26,11 @@ class SalesLogAdmin(ExportMixin, admin.ModelAdmin):
         'payment_method', 'remarks', 'date_of_issue',
          'paid', 'due', 'payment_status_colored', 'created_on', 'issue_types_colored',
     )
-    list_editable = ('discount',)
+    # list_editable = ('discount',)
     list_filter = (("travel_date", DateRangeFilter),'route', 'agent_name','date_of_issue')
     search_fields = ('customer', 'ticket_no', 'pnr_no', 'route', 'remarks', 'agent_name')
     actions = ['export_admin_action']
-    list_per_page = 10
+    list_per_page = 8
 
     def payment_status_colored(self, obj):
         # Display payment_status with colored text, background, padding, and border radius

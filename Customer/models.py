@@ -96,7 +96,7 @@ class salesLog(models.Model):
     net_fare = models.CharField(max_length=10, null=True, blank=True)
     commission = models.CharField(max_length=10, null=True, blank=True)
     discount = models.CharField(max_length=10, null=True, blank=True)
-    net_profit = models.CharField(max_length=10, null=True, blank=True)
+    # net_profit = models.CharField(max_length=10, null=True, blank=True)
 
     ISSUE_TYPES = (
         ('no_issue', 'no issue'),
@@ -142,6 +142,13 @@ class salesLog(models.Model):
             except ValueError:
                 # Handle the case where the values are not valid integers
                 return None
+        return None
+
+    def net_profit(self):
+        if self.commission is not None and self.discount is not None:
+            commission = int(self.commission)
+            discount = int(self.discount)
+            return commission - discount
         return None
 
 
